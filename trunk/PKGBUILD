@@ -2,10 +2,11 @@
 # Maintainer: Dave Reisner <dreisner@archlinux.org>
 # Maintainer: Tom Gundersen <teg@jklm.no>
 
+_pkgbase=systemd-stable
+
 pkgname=lib32-udev
-_pkgbasename=systemd
-_tag='9c8279cdd5d0bc256b8cc0ced2312e27e069a214' # git rev-parse v${_tag_name}
-_tag_name=250
+_tag='615e67a0eeb479009f185d2526acf7cc1ed36e62' # git rev-parse v${_tag_name}
+_tag_name=251.2
 pkgver="${_tag_name/-/}"
 pkgrel=1
 pkgdesc='Userspace device file manager (32-bit)'
@@ -21,11 +22,16 @@ makedepends=('git' 'gperf' 'intltool' 'lib32-acl' 'lib32-libcap'
 options=('strip')
 validpgpkeys=('63CDA1E5D3FC22B998D20DD6327F26951A015CC4'  # Lennart Poettering <lennart@poettering.net>
               'A9EA9081724FFAE0484C35A1A81CEA22BC8C7E2E'  # Luca Boccassi <luca.boccassi@gmail.com>
+              '9A774DB5DB996C154EBBFBFDA0099A18E29326E1'  # Yu Watanabe <watanabe.yu+github@gmail.com>
               '5C251B5FC54EB2F80F407AAAC54CA336CFEB557E') # Zbigniew Jędrzejewski-Szmek <zbyszek@in.waw.pl>
 source=("git+https://github.com/systemd/systemd-stable#tag=${_tag}?signed"
-        "git+https://github.com/systemd/systemd#tag=v${_tag_name%.*}?signed")
+        "git+https://github.com/systemd/systemd#tag=v${_tag_name%.*}?signed"
+        meson-install-tags.patch
+        meson-artix.patch)
 sha512sums=('SKIP'
-            'SKIP')
+            'SKIP'
+            '8ba2721a2a35afdddb6c35d3dddac606d087e4fce1d9c0f3cbf109661cb914e6d07fe4ae90c70d3a6033367deb1c84a986e3b8dd3ea23f2364e22385c4376d9f'
+            'a26003ddcac5a83ec1fec040b36ff46816869028dc79aebb2646f9f2ed090e6358601f911c9d6a04b426c7f3367595e12716e411fca34ffce59d718b067e4e5c')
 
 _backports=(
 )
@@ -34,7 +40,7 @@ _reverts=(
 )
 
 prepare() {
-    cd "$_pkgbasename-stable"
+    cd "$_pkgbase"
 
     # add upstream repository for cherry-picking
     git remote add -f upstream ../systemd
@@ -46,10 +52,8 @@ prepare() {
     for _c in "${_reverts[@]}"; do
         git revert -n "${_c}"
     done
-}
-
-_get_libudev() {
-    echo "$(readlink build/libudev.so.1)"
+    patch -Np1 -i ../meson-install-tags.patch
+    patch -Np1 -i ../meson-artix.patch
 }
 
 build() {
@@ -61,9 +65,8 @@ build() {
         --libexecdir	/usr/lib32
         --libdir		/usr/lib32
 
-        # internal version comparison is incompatible with pacman:
-        #   249~rc1 < 249 < 249.1 < 249rc
         -Dversion-tag="${_tag_name/-/\~}-${pkgrel}-artix"
+        -Dshared-lib-tag="${pkgver}-${pkgrel}"
         -Dmode=release
 
         # features
@@ -140,19 +143,26 @@ build() {
         -Dsysvrcnd-path=
     )
 
-    artix-meson "$_pkgbasename-stable" build "${_meson_options[@]}"
+    artix-meson "$_pkgbase" build "${_meson_options[@]}"
 
-    local _udev=()
-    _udev+=(
-        $(_get_libudev)
+    local _targets=()
+    _targets+=(
+        udev:shared_library
         src/libudev/libudev.pc
     )
 
-    ninja -C build "${_udev[@]}"
+    meson compile -C build "${_targets[@]}"
+}
+
+check() {
+    local tests=()
+    tests+=(
+        test-libudev
+        test-libudev-sym
+    )
+    meson test -C build --print-errorlogs "${tests[@]}"
 }
 
 package() {
-    install -d "${pkgdir}"/usr/lib32/pkgconfig
-    mv -v build/{libudev.so{,.1},$(_get_libudev)} "${pkgdir}"/usr/lib32/
-    mv -v build/src/libudev/libudev.pc "${pkgdir}"/usr/lib32/pkgconfig/
+    meson install -C build --destdir="$pkgdir" --no-rebuild --tags libudev,libudev-devel
 }
