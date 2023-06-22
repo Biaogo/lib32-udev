@@ -5,8 +5,8 @@
 _pkgbase=systemd-stable
 
 pkgname=lib32-udev
-_tag='615e67a0eeb479009f185d2526acf7cc1ed36e62' # git rev-parse v${_tag_name}
-_tag_name=251.2
+_tag='884b34747beaab5909cd65f36ff48afc86377d48' # git rev-parse v${_tag_name}
+_tag_name=253.4
 pkgver="${_tag_name/-/}"
 pkgrel=1
 pkgdesc='Userspace device file manager (32-bit)'
@@ -15,8 +15,8 @@ url='https://www.github.com/systemd/systemd'
 license=('GPL2' 'LGPL2.1')
 provides=("lib32-udev=${pkgver}" 'lib32-eudev')
 replaces=('lib32-eudev')
-depends=('lib32-gcc-libs' 'udev')
-makedepends=('git' 'gperf' 'intltool' 'lib32-acl' 'lib32-libcap'
+depends=('lib32-gcc-libs' 'udev' 'lib32-libcap' 'lib32-glibc')
+makedepends=('git' 'gperf' 'intltool' 'lib32-acl'
              'lib32-glib2' 'lib32-gnutls' 'lib32-libelf'
              'libxslt' 'meson' 'python-jinja' 'python-lxml')
 options=('strip')
@@ -27,11 +27,13 @@ validpgpkeys=('63CDA1E5D3FC22B998D20DD6327F26951A015CC4'  # Lennart Poettering <
 source=("git+https://github.com/systemd/systemd-stable#tag=${_tag}?signed"
         "git+https://github.com/systemd/systemd#tag=v${_tag_name%.*}?signed"
         meson-install-tags.patch
-        meson-artix.patch)
+        meson-artix.patch
+        udev-log-msg.patch)
 sha512sums=('SKIP'
             'SKIP'
-            '8ba2721a2a35afdddb6c35d3dddac606d087e4fce1d9c0f3cbf109661cb914e6d07fe4ae90c70d3a6033367deb1c84a986e3b8dd3ea23f2364e22385c4376d9f'
-            'a26003ddcac5a83ec1fec040b36ff46816869028dc79aebb2646f9f2ed090e6358601f911c9d6a04b426c7f3367595e12716e411fca34ffce59d718b067e4e5c')
+            'e7412ffe57bcbdfdf6e63caa36726a735eaf99c533613218e11dfc3c63912bcb0d713327eb8492ae91e2635e8923e68e552a559d980bc29517f75c711f2b5d71'
+            'a26003ddcac5a83ec1fec040b36ff46816869028dc79aebb2646f9f2ed090e6358601f911c9d6a04b426c7f3367595e12716e411fca34ffce59d718b067e4e5c'
+            '268817ee63ca0b03d2a10bb952837052c1fa80a5d2f0fe933d2aa3d61a09d286f188a6358107114964930fcef7057392f9520f875a83f6e265d2f4bc2564c26e')
 
 _backports=(
 )
