@@ -18,7 +18,7 @@ replaces=('lib32-eudev')
 depends=('lib32-gcc-libs' 'udev' 'lib32-libcap' 'lib32-glibc')
 makedepends=('git' 'gperf' 'intltool' 'lib32-acl'
              'lib32-glib2' 'lib32-gnutls' 'lib32-libelf'
-             'libxslt' 'meson' 'python-jinja' 'python-lxml')
+             'libxslt' 'meson' 'python-jinja' 'python-lxml' 'lib32-libgcrypt')
 options=('strip')
 validpgpkeys=('63CDA1E5D3FC22B998D20DD6327F26951A015CC4'  # Lennart Poettering <lennart@poettering.net>
               'A9EA9081724FFAE0484C35A1A81CEA22BC8C7E2E'  # Luca Boccassi <luca.boccassi@gmail.com>
