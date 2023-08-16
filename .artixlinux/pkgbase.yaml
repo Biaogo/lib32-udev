@@ -7,12 +7,12 @@ pkgbase:
   pkgname:
     - lib32-udev
 actions:
-  addRepo: lib32
-  removeRepo: null
-  triggersBuild: true
+  addRepo: null
+  removeRepo: lib32-gremlins
+  triggersBuild: false
   triggersRebuild: false
-  triggersRepoAdd: true
-  triggersRepoRemove: false
+  triggersRepoAdd: false
+  triggersRepoRemove: true
   triggersNoCheck: false
 repos:
   system-goblins:
@@ -37,9 +37,8 @@ repos:
     version: null
     packages: []
   lib32-gremlins:
-    version: 253.6-1
-    packages:
-      - lib32-udev-253.6-1-x86_64.pkg.tar.zst
+    version: null
+    packages: []
   lib32:
     version: 253.8-1
     packages:
