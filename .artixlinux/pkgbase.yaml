@@ -1,17 +1,17 @@
 ---
 pkgbase:
   name: lib32-udev
-  version: 253.6-1
+  version: 253.8-1
   arch:
     - x86_64
   pkgname:
     - lib32-udev
 actions:
-  addRepo: null
+  addRepo: lib32
   removeRepo: null
-  triggersBuild: false
+  triggersBuild: true
   triggersRebuild: false
-  triggersRepoAdd: false
+  triggersRepoAdd: true
   triggersRepoRemove: false
   triggersNoCheck: false
 repos:
@@ -41,9 +41,9 @@ repos:
     packages:
       - lib32-udev-253.6-1-x86_64.pkg.tar.zst
   lib32:
-    version: 253.5-1
+    version: 253.8-1
     packages:
-      - lib32-udev-253.5-1-x86_64.pkg.tar.zst
+      - lib32-udev-253.8-1-x86_64.pkg.tar.zst
   galaxy-goblins:
     version: null
     packages: []

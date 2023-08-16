@@ -5,8 +5,8 @@
 _pkgbase=systemd-stable
 
 pkgname=lib32-udev
-_tag='c017ed867787d09484ba7de75a8f025820596955' # git rev-parse v${_tag_name}
-_tag_name=253.6
+_tag='883aab2e803c9f4ca71028a2578298cce5ac5ac4' # git rev-parse v${_tag_name}
+_tag_name=253.8
 pkgver="${_tag_name/-/}"
 pkgrel=1
 pkgdesc='Userspace device file manager (32-bit)'
@@ -24,8 +24,8 @@ validpgpkeys=('63CDA1E5D3FC22B998D20DD6327F26951A015CC4'  # Lennart Poettering <
               'A9EA9081724FFAE0484C35A1A81CEA22BC8C7E2E'  # Luca Boccassi <luca.boccassi@gmail.com>
               '9A774DB5DB996C154EBBFBFDA0099A18E29326E1'  # Yu Watanabe <watanabe.yu+github@gmail.com>
               '5C251B5FC54EB2F80F407AAAC54CA336CFEB557E') # Zbigniew Jędrzejewski-Szmek <zbyszek@in.waw.pl>
-source=("git+https://github.com/systemd/systemd-stable#tag=${_tag}?signed"
-        "git+https://github.com/systemd/systemd#tag=v${_tag_name%.*}?signed"
+source=("git+https://github.com/systemd/systemd-stable#tag=${_tag}" #?signed
+        "git+https://github.com/systemd/systemd#tag=v${_tag_name%.*}" #?signed
         meson-install-tags.patch
         meson-artix.patch
         udev-log-msg.patch)
