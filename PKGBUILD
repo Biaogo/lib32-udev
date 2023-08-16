@@ -5,8 +5,8 @@
 _pkgbase=systemd-stable
 
 pkgname=lib32-udev
-_tag='883aab2e803c9f4ca71028a2578298cce5ac5ac4' # git rev-parse v${_tag_name}
-_tag_name=253.8
+_tag='2c4171c3c4146fcb32253bfb6423b5a3ee42a553' # git rev-parse v${_tag_name}
+_tag_name=254.1
 pkgver="${_tag_name/-/}"
 pkgrel=1
 pkgdesc='Userspace device file manager (32-bit)'
@@ -26,14 +26,10 @@ validpgpkeys=('63CDA1E5D3FC22B998D20DD6327F26951A015CC4'  # Lennart Poettering <
               '5C251B5FC54EB2F80F407AAAC54CA336CFEB557E') # Zbigniew Jędrzejewski-Szmek <zbyszek@in.waw.pl>
 source=("git+https://github.com/systemd/systemd-stable#tag=${_tag}" #?signed
         "git+https://github.com/systemd/systemd#tag=v${_tag_name%.*}" #?signed
-        meson-install-tags.patch
-        meson-artix.patch
-        udev-log-msg.patch)
+        0001-artix-install-tags.patch)
 sha512sums=('SKIP'
             'SKIP'
-            'e7412ffe57bcbdfdf6e63caa36726a735eaf99c533613218e11dfc3c63912bcb0d713327eb8492ae91e2635e8923e68e552a559d980bc29517f75c711f2b5d71'
-            'a26003ddcac5a83ec1fec040b36ff46816869028dc79aebb2646f9f2ed090e6358601f911c9d6a04b426c7f3367595e12716e411fca34ffce59d718b067e4e5c'
-            '268817ee63ca0b03d2a10bb952837052c1fa80a5d2f0fe933d2aa3d61a09d286f188a6358107114964930fcef7057392f9520f875a83f6e265d2f4bc2564c26e')
+            'f76ba2c0ec3bdf76016bde13259281f08f377f22915025f9201f03b51287c34e41334a79ff31c3fa43da0c469355e70da4c68ec8441b09c0885b47bdde0fd616')
 
 _backports=(
 )
@@ -54,8 +50,7 @@ prepare() {
     for _c in "${_reverts[@]}"; do
         git revert -n "${_c}"
     done
-    patch -Np1 -i ../meson-install-tags.patch
-    patch -Np1 -i ../meson-artix.patch
+    patch -Np1 -i ../0001-artix-install-tags.patch
 }
 
 build() {
@@ -74,7 +69,7 @@ build() {
         # features
         -Daudit=false
         -Dblkid=false
-        -Dgnu-efi=false
+        #-Dgnu-efi=false
         -Dima=false
         -Dkmod=false
         -Dlibcryptsetup=false
