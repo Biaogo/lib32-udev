@@ -1,18 +1,18 @@
 ---
 pkgbase:
   name: lib32-udev
-  version: 254.1-1
+  version: 254.3-1
   arch:
     - x86_64
   pkgname:
     - lib32-udev
 actions:
-  addRepo: lib32
-  removeRepo: lib32-gremlins
-  triggersBuild: false
+  addRepo: lib32-gremlins
+  removeRepo: null
+  triggersBuild: true
   triggersRebuild: false
   triggersRepoAdd: true
-  triggersRepoRemove: true
+  triggersRepoRemove: false
   triggersNoCheck: false
 repos:
   system-goblins:
@@ -37,8 +37,9 @@ repos:
     version: null
     packages: []
   lib32-gremlins:
-    version: null
-    packages: []
+    version: 254.3-1
+    packages:
+      - lib32-udev-254.3-1-x86_64.pkg.tar.zst
   lib32:
     version: 254.1-1
     packages:

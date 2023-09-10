@@ -5,8 +5,8 @@
 _pkgbase=systemd-stable
 
 pkgname=lib32-udev
-_tag='2c4171c3c4146fcb32253bfb6423b5a3ee42a553' # git rev-parse v${_tag_name}
-_tag_name=254.1
+_tag='d357815dc8213b736ac7bc5eefcc28a4dbb4f64f' # git rev-parse v${_tag_name}
+_tag_name=254.3
 pkgver="${_tag_name/-/}"
 pkgrel=1
 pkgdesc='Userspace device file manager (32-bit)'
@@ -26,10 +26,10 @@ validpgpkeys=('63CDA1E5D3FC22B998D20DD6327F26951A015CC4'  # Lennart Poettering <
               '5C251B5FC54EB2F80F407AAAC54CA336CFEB557E') # Zbigniew Jędrzejewski-Szmek <zbyszek@in.waw.pl>
 source=("git+https://github.com/systemd/systemd-stable#tag=${_tag}" #?signed
         "git+https://github.com/systemd/systemd#tag=v${_tag_name%.*}" #?signed
-        0001-artix-install-tags.patch)
+        0001-artix-standalone-install.patch)
 sha512sums=('SKIP'
             'SKIP'
-            'f76ba2c0ec3bdf76016bde13259281f08f377f22915025f9201f03b51287c34e41334a79ff31c3fa43da0c469355e70da4c68ec8441b09c0885b47bdde0fd616')
+            '3d985204cda5faadc21188874127a03d1543072e16c11eca871ea000d273c226ffba3b458d06606fdef4334326bd6fed727fe1d781c763871ff4bdaa8fb42d66')
 
 _backports=(
 )
@@ -50,7 +50,7 @@ prepare() {
     for _c in "${_reverts[@]}"; do
         git revert -n "${_c}"
     done
-    patch -Np1 -i ../0001-artix-install-tags.patch
+    patch -Np1 -i ../0001-artix-standalone-install.patch
 }
 
 build() {
