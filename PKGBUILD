@@ -5,8 +5,8 @@
 _pkgbase=systemd-stable
 
 pkgname=lib32-udev
-_tag='2d7670ddc4473e18c92b15b4a4522e4f12a59d33' # git rev-parse v${_tag_name}
-_tag_name=254.4
+_tag='0966fe6734417ce07d5eb82a245fdec3789714da' # git rev-parse v${_tag_name}
+_tag_name=255
 pkgver="${_tag_name/-/}"
 pkgrel=1
 pkgdesc='Userspace device file manager (32-bit)'
@@ -29,7 +29,7 @@ source=("git+https://github.com/systemd/systemd-stable#tag=${_tag}" #?signed
         0001-artix-standalone-install.patch)
 sha512sums=('SKIP'
             'SKIP'
-            '3d985204cda5faadc21188874127a03d1543072e16c11eca871ea000d273c226ffba3b458d06606fdef4334326bd6fed727fe1d781c763871ff4bdaa8fb42d66')
+            '1cb669d2f0de5b0ac9dafe1503edfa62be23d4cc3efebf5897320a7cadc3f674effdc9f8d50e27dbefc9385a13282c3bdd84c718d321f5ac2b116f7026f5202d')
 
 _backports=(
 )
@@ -66,78 +66,129 @@ build() {
         -Dshared-lib-tag="${pkgver}-${pkgrel}"
         -Dmode=release
 
-        # features
-        -Daudit=false
-        -Dblkid=false
-        #-Dgnu-efi=false
-        -Dima=false
-        -Dkmod=false
-        -Dlibcryptsetup=false
-        -Dlibidn2=false
-        -Dlibiptc=false
-        -Dlz4=false
-        -Dmicrohttpd=false
-        -Dpam=false
-        -Dseccomp=false
-
-        -Dlink-udev-shared=false
-
-        # components
-        -Dutmp=false
-        -Dhibernate=false
-        -Dldconfig=false
-        -Dresolve=false
-        -Defi=false
-        -Dtpm=false
-        -Denvironment-d=false
-        -Dbinfmt=false
-        -Drepart=false
-        -Dcoredump=false
-        -Dpstore=false
-        -Doomd=false
-        -Dlogind=false
-        -Dhostnamed=false
-        -Dlocaled=false
-        -Dmachined=false
-        -Dportabled=false
-        -Dsysext=false
-        -Duserdb=false
-        -Dhomed=false
-        -Dnetworkd=false
-        -Dtimedated=false
-        -Dtimesyncd=false
-        -Dremote=false
-        -Dcreate-log-dirs=false
-        -Dnss-myhostname=false
-        -Dnss-mymachines=false
-        -Dnss-resolve=false
-        -Dnss-systemd=false
-        -Dfirstboot=false
-        -Drandomseed=false
-        -Dbacklight=false
-        -Dvconsole=false
-        -Dquotacheck=false
+        -Dstandalone-binaries=false
         -Dsysusers=false
         -Dtmpfiles=false
-        -Dimportd=false
-        -Dhwdb=false
-        -Drfkill=false
-        -Dxdg-autostart=false
-        -Dman=false
-        -Dhtml=false
-        -Dtranslations=false
 
-        -Ddbuspolicydir=/usr/share/dbus-1/system.d
-        -Ddefault-hierarchy=unified
-        -Ddefault-kill-user-processes=false
-        -Ddefault-locale=C
-        -Dfallback-hostname='artixlinux'
-        -Dnologin-path=/usr/bin/nologin
-        -Dntp-servers=
-        -Ddns-servers=
-        -Drpmmacrosdir=no
+        -Dhwdb=false
+
+        -Dblkid=disabled
+
+        -Dkmod=disabled
+
+        -Dgshadow=false
+
+        -Dsbat-distro='artix'
+        -Dsbat-distro-summary='Artix Linux'
+        -Dsbat-distro-pkgname="${pkgname}"
+        -Dsbat-distro-version="${pkgver}"
+
+        -Dtests=false
+
+        -Dlink-udev-shared=false
+        #-Dlink-boot-shared=false
+
+        -Ddefault-keymap='us'
+
+        -Dman=disabled
+
+        -Dhtml=disabled
+
+        -Ddns-servers=''
+        -Dntp-servers=''
+        -Defi=false
+
         -Dsysvinit-path=
         -Dsysvrcnd-path=
+        -Ddefault-dnssec=no
+
+        -Ddefault-llmnr=no
+        -Ddefault-mdns=no
+
+        -Dadm-group=false
+        -Danalyze=false
+
+        -Dapparmor=disabled
+        -Daudit=disabled
+        -Dbacklight=false
+        -Dbinfmt=false
+        -Dbootloader=disabled
+        -Dbzip2=disabled
+        -Dcoredump=false
+        -Ddbus=disabled
+        -Delfutils=disabled
+        -Denvironment-d=false
+        -Dfdisk=disabled
+        -Dgcrypt=disabled
+        -Dglib=disabled
+        -Dgnutls=disabled
+        -Dhibernate=false
+        -Dhostnamed=false
+        -Didn=false
+        -Dima=false
+        -Dinitrd=false
+        -Dfirstboot=false
+        -Dkernel-install=false
+        -Dldconfig=false
+        -Dlibcryptsetup=disabled
+        -Dlibcurl=disabled
+        -Dlibfido2=disabled
+        -Dlibidn=disabled
+        -Dlibidn2=disabled
+        -Dlibiptc=disabled
+        -Dlocaled=false
+        -Dlogind=false
+        -Dlz4=disabled
+        -Dmachined=false
+        -Dmicrohttpd=disabled
+        -Dnetworkd=false
+        -Dnscd=false
+        -Dnss-myhostname=false
+        -Dnss-resolve=disabled
+        -Dnss-systemd=false
+        -Doomd=false
+        -Dopenssl=disabled
+        -Dp11kit=disabled
+        -Dpam=disabled
+        -Dpcre2=disabled
+        -Dpolkit=disabled
+        -Dportabled=false
+        -Dpstore=false
+        -Dpwquality=disabled
+        -Drandomseed=false
+        -Dresolve=false
+        -Drfkill=false
+        -Dseccomp=disabled
+        -Dsmack=false
+        -Dsysext=false
+        -Dtimedated=false
+        -Dtimesyncd=false
+        -Dtpm=false
+        -Dqrencode=disabled
+        -Dquotacheck=false
+        -Duserdb=false
+        -Dutmp=false
+        -Dvconsole=false
+        -Dwheel-group=false
+        -Dxdg-autostart=false
+        -Dxkbcommon=disabled
+        -Dxz=disabled
+        -Dzlib=disabled
+        -Dzstd=disabled
+
+        -Dbpf-framework=disabled
+        -Dpasswdqc=disabled
+        -Dselinux=disabled
+        -Dxenctrl=disabled
+        -Dlibcryptsetup-plugins=disabled
+        -Drepart=false
+        -Dsysupdate=false
+        -Dimportd=false
+        -Dhomed=false
+        -Dremote=false
+        -Dnss-mymachines=false
+        -Dukify=false
+        -Dtpm2=false
     )
 
     artix-meson "$_pkgbase" build "${_meson_options[@]}"
@@ -162,4 +213,6 @@ check() {
 
 package() {
     meson install -C build --destdir="$pkgdir" --no-rebuild --tags libudev,libudev-devel
+
+    rm -rf "$pkgdir"/usr/include
 }
