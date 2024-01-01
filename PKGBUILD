@@ -5,8 +5,8 @@
 _pkgbase=systemd-stable
 
 pkgname=lib32-udev
-_tag='0966fe6734417ce07d5eb82a245fdec3789714da' # git rev-parse v${_tag_name}
-_tag_name=255
+_tag='be88ad03366b8aa059bb72b39a270128ba62b428' # git rev-parse v${_tag_name}
+_tag_name=255.2
 pkgver="${_tag_name/-/}"
 pkgrel=1
 pkgdesc='Userspace device file manager (32-bit)'
