@@ -5,14 +5,14 @@
 _pkgbase=systemd-stable
 
 pkgname=lib32-udev
-_tag='be88ad03366b8aa059bb72b39a270128ba62b428' # git rev-parse v${_tag_name}
-_tag_name=255.2
-pkgver="${_tag_name/-/}"
+_tag='4003dd6754e3446691402d3cc389fbfd4faccc90' # git rev-parse v${_tag_name}
+_tag_name=255.4
+pkgver="${_tag_name/~/}"
 pkgrel=1
 pkgdesc='Userspace device file manager (32-bit)'
 arch=('x86_64')
 url='https://www.github.com/systemd/systemd'
-license=('GPL2' 'LGPL2.1')
+license=('GPL-2.0-or-later' 'LGPL-2.1-or-later')
 provides=("lib32-udev=${pkgver}" 'lib32-eudev')
 replaces=('lib32-eudev')
 depends=('lib32-gcc-libs' 'udev' 'lib32-libcap' 'lib32-glibc')
@@ -29,7 +29,7 @@ source=("git+https://github.com/systemd/systemd-stable#tag=${_tag}" #?signed
         0001-artix-standalone-install.patch)
 sha512sums=('SKIP'
             'SKIP'
-            '1cb669d2f0de5b0ac9dafe1503edfa62be23d4cc3efebf5897320a7cadc3f674effdc9f8d50e27dbefc9385a13282c3bdd84c718d321f5ac2b116f7026f5202d')
+            'c8a14c044504bd6117918a9da0b236519417d41c4ff7959d8642f949199107c767d4337b5f730ea3a7827f6757272836596b0dfbe4785ca550f8008362189193')
 
 _backports=(
 )
@@ -62,7 +62,7 @@ build() {
         --libexecdir	/usr/lib32
         --libdir		/usr/lib32
 
-        -Dversion-tag="${_tag_name/-/\~}-${pkgrel}-artix"
+        -Dversion-tag="${_tag_name}-${pkgrel}-artix"
         -Dshared-lib-tag="${pkgver}-${pkgrel}"
         -Dmode=release
 
