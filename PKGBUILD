@@ -8,17 +8,17 @@ pkgname=lib32-udev
 _tag='4003dd6754e3446691402d3cc389fbfd4faccc90' # git rev-parse v${_tag_name}
 _tag_name=255.4
 pkgver="${_tag_name/~/}"
-pkgrel=1
+pkgrel=2
 pkgdesc='Userspace device file manager (32-bit)'
 arch=('x86_64')
 url='https://www.github.com/systemd/systemd'
 license=('GPL-2.0-or-later' 'LGPL-2.1-or-later')
-provides=("lib32-udev=${pkgver}" 'lib32-eudev')
-replaces=('lib32-eudev')
-depends=('lib32-gcc-libs' 'udev' 'lib32-libcap' 'lib32-glibc')
+provides=('libudev.so')
+depends=('lib32-gcc-libs' 'libudev' 'lib32-libcap' 'lib32-glibc')
 makedepends=('git' 'gperf' 'intltool' 'lib32-acl'
              'lib32-glib2' 'lib32-gnutls' 'lib32-libelf'
              'libxslt' 'meson' 'python-jinja' 'python-lxml' 'lib32-libgcrypt')
+checkdepends=('udev')
 options=('strip')
 validpgpkeys=('63CDA1E5D3FC22B998D20DD6327F26951A015CC4'  # Lennart Poettering <lennart@poettering.net>
               'A9EA9081724FFAE0484C35A1A81CEA22BC8C7E2E'  # Luca Boccassi <luca.boccassi@gmail.com>
