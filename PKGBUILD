@@ -8,12 +8,12 @@ pkgname=lib32-udev
 _tag='4003dd6754e3446691402d3cc389fbfd4faccc90' # git rev-parse v${_tag_name}
 _tag_name=255.4
 pkgver="${_tag_name/~/}"
-pkgrel=3
+pkgrel=4
 pkgdesc='Userspace device file manager (32-bit)'
 arch=('x86_64')
 url='https://www.github.com/systemd/systemd'
 license=('GPL-2.0-or-later' 'LGPL-2.1-or-later')
-provides=('libudev.so' 'lib32-eudev')
+provides=('libudev.so')
 depends=('lib32-gcc-libs' 'libudev' 'lib32-libcap' 'lib32-glibc')
 makedepends=('git' 'gperf' 'intltool' 'lib32-acl'
              'lib32-glib2' 'lib32-gnutls' 'lib32-libelf'
