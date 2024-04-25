@@ -3,32 +3,52 @@
 # Maintainer: Tom Gundersen <teg@jklm.no>
 
 _pkgbase=systemd-stable
+_tag=255.5
 
 pkgname=lib32-udev
-_tag='4003dd6754e3446691402d3cc389fbfd4faccc90' # git rev-parse v${_tag_name}
-_tag_name=255.4
-pkgver="${_tag_name/~/}"
-pkgrel=4
+pkgver="${_tag/~/}"
+pkgrel=1
 pkgdesc='Userspace device file manager (32-bit)'
 arch=('x86_64')
 url='https://www.github.com/systemd/systemd'
-license=('GPL-2.0-or-later' 'LGPL-2.1-or-later')
-provides=('libudev.so')
-depends=('lib32-gcc-libs' 'libudev' 'lib32-libcap' 'lib32-glibc')
-makedepends=('git' 'gperf' 'intltool' 'lib32-acl'
-             'lib32-glib2' 'lib32-gnutls' 'lib32-libelf'
-             'libxslt' 'meson' 'python-jinja' 'python-lxml' 'lib32-libgcrypt')
+license=(
+    'GPL-2.0-or-later'
+    'LGPL-2.1-or-later'
+)
+provides=(
+    'libudev.so'
+)
+depends=(
+    'lib32-gcc-libs'
+    'libudev'
+    'lib32-libcap'
+    'lib32-glibc'
+)
+makedepends=(
+    'git'
+    'gperf'
+    'intltool'
+    'lib32-acl'
+    'lib32-glib2'
+    'lib32-gnutls'
+    'lib32-libelf'
+    'libxslt'
+    'meson'
+    'python-jinja'
+    'python-lxml'
+    'lib32-libgcrypt'
+)
 checkdepends=('udev')
 options=('strip')
 validpgpkeys=('63CDA1E5D3FC22B998D20DD6327F26951A015CC4'  # Lennart Poettering <lennart@poettering.net>
               'A9EA9081724FFAE0484C35A1A81CEA22BC8C7E2E'  # Luca Boccassi <luca.boccassi@gmail.com>
               '9A774DB5DB996C154EBBFBFDA0099A18E29326E1'  # Yu Watanabe <watanabe.yu+github@gmail.com>
               '5C251B5FC54EB2F80F407AAAC54CA336CFEB557E') # Zbigniew Jędrzejewski-Szmek <zbyszek@in.waw.pl>
-source=("git+https://github.com/systemd/systemd-stable#tag=${_tag}" #?signed
-        "git+https://github.com/systemd/systemd#tag=v${_tag_name%.*}" #?signed
+source=("git+https://github.com/systemd/systemd-stable#tag=v${_tag}" #?signed
+        "git+https://github.com/systemd/systemd#tag=v${_tag%.*}" #?signed
         0001-artix-standalone-install.patch)
-sha512sums=('SKIP'
-            'SKIP'
+sha512sums=('ab0d47a29d60cb88f0934a9204c71cd78e2f5f568b9da532fdd4f8da55a352fce51cbcbaf17dc1a6f5b3c43ed7579876c724abcc2af5d8c4d3979f2ede60982f'
+            'd430427987309483c99062adb02741d25239ba5fbb97053ef817c0c5a0a935328af9c8b651de2b119b0e851dcf6623f01343859735ff81d7013ab0133e67c7ea'
             'c8a14c044504bd6117918a9da0b236519417d41c4ff7959d8642f949199107c767d4337b5f730ea3a7827f6757272836596b0dfbe4785ca550f8008362189193')
 
 _backports=(
@@ -62,7 +82,7 @@ build() {
         --libexecdir	/usr/lib32
         --libdir		/usr/lib32
 
-        -Dversion-tag="${_tag_name}-${pkgrel}-artix"
+        -Dversion-tag="${pkgver}-${pkgrel}-artix"
         -Dshared-lib-tag="${pkgver}-${pkgrel}"
         -Dmode=release
 
