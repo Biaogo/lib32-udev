@@ -61,7 +61,7 @@ prepare() {
     cd "$_pkgbase"
 
     # add upstream repository for cherry-picking
-    git remote add -f upstream ../systemd
+    # git remote add -f upstream ../systemd
 
     local _c
     for _c in "${_backports[@]}"; do
@@ -82,7 +82,7 @@ build() {
         --libexecdir	/usr/lib32
         --libdir		/usr/lib32
 
-        -Dversion-tag="${pkgver}-${pkgrel}-artix"
+        -Dversion-tag="${pkgver}-${pkgrel}-neko"
         -Dshared-lib-tag="${pkgver}-${pkgrel}"
         -Dmode=release
 
@@ -98,8 +98,8 @@ build() {
 
         -Dgshadow=false
 
-        -Dsbat-distro='artix'
-        -Dsbat-distro-summary='Artix Linux'
+        -Dsbat-distro='neko'
+        -Dsbat-distro-summary='Neko Linux'
         -Dsbat-distro-pkgname="${pkgname}"
         -Dsbat-distro-version="${pkgver}"
 
