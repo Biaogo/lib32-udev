@@ -2,11 +2,11 @@
 # Maintainer: Dave Reisner <dreisner@archlinux.org>
 # Maintainer: Tom Gundersen <teg@jklm.no>
 
-_pkgbase=systemd
-_tag=256.1
+_pkgbase=systemd-stable
+_tag=255.6
 
 pkgname=lib32-udev
-pkgver="${_tag/[-~]/}"
+pkgver="${_tag/~/}"
 pkgrel=1
 pkgdesc='Userspace device file manager (32-bit)'
 arch=('x86_64')
@@ -44,10 +44,12 @@ validpgpkeys=('63CDA1E5D3FC22B998D20DD6327F26951A015CC4'  # Lennart Poettering <
               'A9EA9081724FFAE0484C35A1A81CEA22BC8C7E2E'  # Luca Boccassi <luca.boccassi@gmail.com>
               '9A774DB5DB996C154EBBFBFDA0099A18E29326E1'  # Yu Watanabe <watanabe.yu+github@gmail.com>
               '5C251B5FC54EB2F80F407AAAC54CA336CFEB557E') # Zbigniew Jędrzejewski-Szmek <zbyszek@in.waw.pl>
-source=("git+https://github.com/systemd/systemd#tag=v${_tag}?signed"
+source=("git+https://github.com/systemd/systemd-stable#tag=v${_tag}" #?signed
+        "git+https://github.com/systemd/systemd#tag=v${_tag%.*}" #?signed
         0001-artix-standalone-install.patch)
-sha512sums=('1ba38dd45cd910c7a2b4c7f23f982c5b0e5b13cd5874571ebc9b609ff85c058cecdb61019141ef2010fd4882c3ffc5a13a2b0d6370db4067ad90c28b83de6760'
-            'df2a2a31bffe6b2572f789b12871fc95664e7191a292b0e8bc01bbd94048dec00383fa4579f2a6eefc20d9f311a8a1078b2c5aaaa77889b3c34b3a964098f431')
+sha512sums=('c1de1eb0d0ef6d8da81a105cdfcb86634bed6f46ab1038de9ab786fd85f59524e7eb30fe1d02dbf2c3b3a29dc66d04a102b2274a09ad3d2c18953c380099aa0e'
+            'd430427987309483c99062adb02741d25239ba5fbb97053ef817c0c5a0a935328af9c8b651de2b119b0e851dcf6623f01343859735ff81d7013ab0133e67c7ea'
+            '28882b12d640938ac36b3a8a6ede1aa58185b125beb10a58c63f8ee9a18096da29b0afe31e8db04e5c37d7bd315effb75425320d96fe2b7252292b1d3e955cae')
 
 _backports=(
 )
@@ -57,6 +59,9 @@ _reverts=(
 
 prepare() {
     cd "$_pkgbase"
+
+    # add upstream repository for cherry-picking
+    git remote add -f upstream ../systemd
 
     local _c
     for _c in "${_backports[@]}"; do
@@ -98,7 +103,7 @@ build() {
         -Dsbat-distro-pkgname="${pkgname}"
         -Dsbat-distro-version="${pkgver}"
 
-        -Dtests=true
+        -Dtests=false
 
         -Dlink-udev-shared=false
         #-Dlink-boot-shared=false
@@ -119,8 +124,6 @@ build() {
 
         -Ddefault-llmnr=no
         -Ddefault-mdns=no
-
-        -Dsshconfdir=no
 
         -Dadm-group=false
         -Danalyze=false
@@ -230,4 +233,6 @@ check() {
 
 package() {
     meson install -C build --destdir="$pkgdir" --no-rebuild --tags libudev,libudev-devel
+
+    rm -rf "$pkgdir"/usr/include
 }
